@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isSignedIn">
+  <div v-if="!isSignedIn && !access">
     <Auth
       :showSignUp="showSignUp"
       @sign-in="signIn"
@@ -7,7 +7,7 @@
     />
   </div>
   <div v-else>
-    <Dashboard @sign-out="signOut" />
+    <Dashboard :access="access" @sign-out="signOut" />
   </div>
 </template>
 
@@ -25,20 +25,22 @@ export default {
     return {
       isSignedIn: false,
       showSignUp: false,
+      access: localStorage.getItem("access"),
     };
   },
   methods: {
     toggleSignup() {
-      console.log(1234);
       this.showSignUp = !this.showSignUp;
     },
     signIn() {
+      this.access = localStorage.getItem("access");
       this.isSignedIn = true;
     },
     signOut() {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
 
+      this.access = null;
       this.isSignedIn = false;
     },
   },

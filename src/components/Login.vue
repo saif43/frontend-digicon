@@ -66,13 +66,14 @@ export default {
         password: this.password,
       };
 
+      this.username = "";
+      this.password = "";
+
       try {
         const { data, status } = await backend.post("token/", formData);
 
         if (status === 200) {
           const { refresh, access } = data;
-
-          console.log(access);
 
           localStorage.setItem("access", access);
           localStorage.setItem("refresh", refresh);

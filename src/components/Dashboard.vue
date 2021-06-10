@@ -14,16 +14,15 @@ import Products from "./Products.vue";
 import Cart from "./Cart.vue";
 import backend from "../../api/backend";
 
-const config = {
-  headers: { Authorization: `JWT ${localStorage.getItem("access")}` },
-};
-
 export default {
   name: "Dashboard",
   components: {
     Navbar,
     Products,
     Cart,
+  },
+  props: {
+    access: String,
   },
   async created() {
     this.products = await this.fetchProducts();
@@ -37,6 +36,10 @@ export default {
   },
   methods: {
     async addToCart(id) {
+      const config = {
+        headers: { Authorization: `JWT ${this.access}` },
+      };
+
       const { data, status } = await backend.post(
         "user/cart/",
         { product: id },
@@ -55,6 +58,10 @@ export default {
     },
 
     async removeFromCart(id) {
+      const config = {
+        headers: { Authorization: `JWT ${this.access}` },
+      };
+
       const { status } = await backend.delete(`user/cart/${id}/`, config);
 
       if (status === 200 || status === 204) {
@@ -71,11 +78,19 @@ export default {
     },
 
     async fetchCart() {
+      const config = {
+        headers: { Authorization: `JWT ${this.access}` },
+      };
+
       const { data } = await backend.get("user/cart/", config);
       return data;
     },
 
     async fetchProducts() {
+      const config = {
+        headers: { Authorization: `JWT ${this.access}` },
+      };
+
       const { data } = await backend.get("product/", config);
       return data;
     },

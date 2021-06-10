@@ -77,6 +77,10 @@ export default {
         password: this.password,
       };
 
+      this.name = "";
+      this.username = "";
+      this.password = "";
+
       try {
         const { status } = await backend.post("user/create/", formData);
 

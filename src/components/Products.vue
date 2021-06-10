@@ -1,9 +1,12 @@
 <template>
   <div class="col-sm-4 left">
     <h3 class="mb-4">Product list</h3>
-    <Product />
-    <Product />
-    <Product />
+    <div v-for="product in products" :key="product.id">
+      <Product
+        :product="product"
+        @add-to-cart="$emit('add-to-cart', product.id)"
+      />
+    </div>
   </div>
 </template>
 
@@ -14,6 +17,9 @@ export default {
   name: "Products",
   components: {
     Product,
+  },
+  props: {
+    products: Array,
   },
 };
 </script>

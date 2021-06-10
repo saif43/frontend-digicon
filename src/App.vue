@@ -1,6 +1,5 @@
 <template>
   <Home :isSignedIn="isSignedIn" />
-  <!-- <router-view /> -->
 </template>
 
 <script>

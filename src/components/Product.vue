@@ -1,16 +1,35 @@
 <template>
   <div>
     <div class="product">
-      <h5>Product 1</h5>
-      <button class="btn btn-primary">Add to cart</button>
+      <h5>{{ product.name }}</h5>
+
+      <div v-if="product.added_to_cart">
+        <button class="btn btn-secondary" disabled>Added</button>
+      </div>
+      <div v-else>
+        <button
+          @click="$emit('add-to-cart')"
+          class="btn btn-primary added-to-cart"
+        >
+          Add to cart
+        </button>
+      </div>
     </div>
     <hr />
   </div>
 </template>
 
 <script>
+import Fragment from "vue-fragment";
+
 export default {
   name: "Product",
+  props: {
+    product: Object,
+  },
+  components: {
+    Fragment,
+  },
 };
 </script>
 
@@ -19,9 +38,5 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.product button {
-  margin-right: 9%;
 }
 </style>

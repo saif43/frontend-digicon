@@ -1,8 +1,13 @@
 <template>
   <div>
     <div class="product">
-      <h5>Product 1</h5>
-      <button class="btn btn-danger">Remove</button>
+      <h5>{{ item.product.name }}</h5>
+      <button
+        @click="$emit('remove-from-cart', item.id)"
+        class="btn btn-danger"
+      >
+        Remove
+      </button>
     </div>
     <hr />
   </div>
@@ -11,6 +16,9 @@
 <script>
 export default {
   name: "CartItem",
+  props: {
+    item: Object,
+  },
 };
 </script>
 

@@ -8,7 +8,7 @@
         width="72"
         height="57"
       />
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+      <h1 class="h3 mb-3 fw-normal">Sign up</h1>
 
       <div class="form-floating mb-4">
         <input
@@ -19,6 +19,16 @@
           required
         />
         <label for="floatingInput">Username</label>
+      </div>
+      <div class="form-floating mb-4">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter your full name"
+          v-model="name"
+          required
+        />
+        <label for="floatingInput">Full name</label>
       </div>
       <div class="form-floating mb-3">
         <input
@@ -31,28 +41,28 @@
         <label for="floatingPassword">Password</label>
       </div>
 
-      <button class="w-100 btn btn-lg btn-primary">Sign in</button>
+      <button class="w-100 btn btn-lg btn-primary">Sign up</button>
     </form>
     <p class="mt-5 mb-3 text-muted">
-      New Here ?
+      Already have an account ?
       <button
-        @click="$emit('toggle-sign-up')"
         class="btn btn-outline-secondary"
+        @click="$emit('toggle-sign-up')"
       >
-        Sign up
+        Sign in
       </button>
     </p>
   </main>
 </template>
 
-
 <script>
 import backend from "../../api/backend";
 
 export default {
-  name: "Login",
+  name: "Signup",
   data() {
     return {
+      name: "",
       username: "",
       password: "",
     };
@@ -62,22 +72,16 @@ export default {
       e.preventDefault();
 
       const formData = {
+        name: this.name,
         username: this.username,
         password: this.password,
       };
 
       try {
-        const { data, status } = await backend.post("token/", formData);
+        const { status } = await backend.post("user/create/", formData);
 
-        if (status === 200) {
-          const { refresh, access } = data;
-
-          console.log(access);
-
-          localStorage.setItem("access", access);
-          localStorage.setItem("refresh", refresh);
-
-          this.$emit("sign-in");
+        if (status === 201) {
+          this.$emit("toggle-sign-up");
         }
       } catch (error) {
         console.log(error);

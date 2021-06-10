@@ -20,7 +20,9 @@
         <ul class="navbar-nav mr-auto"></ul>
         <ul class="navbar-nav" style="--bs-scroll-height: 100px">
           <li class="nav-item">
-            <button type="button" class="btn btn-sm btn-danger">Logout</button>
+            <button @click="$emit('sign-out')" class="btn btn-sm btn-danger">
+              Logout
+            </button>
           </li>
         </ul>
       </div>
